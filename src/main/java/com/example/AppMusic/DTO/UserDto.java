@@ -1,9 +1,11 @@
 package com.example.AppMusic.DTO;
 
+import jakarta.validation.constraints.Email;
 import lombok.Getter;
 import lombok.Setter;
 import java.time.LocalDate;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.hibernate.type.descriptor.DateTimeUtils;
 
 @Getter
 @Setter
@@ -16,7 +18,7 @@ public class UserDto {
     private String userLastName;
 
 
-    private LocalDate birthDate;
+    private String birthDate;
 
     private String nationalId;
 }

@@ -6,6 +6,7 @@ import com.example.AppMusic.IService.IUserService;
 import com.example.AppMusic.Repository.UserRepository;
 import com.github.dozermapper.core.Mapper;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,6 +38,25 @@ public class UserService implements IUserService {
 
     public String createUser(UserDto userDto){
 
+        String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
+
+        if (!userDto.getEmail().matches(emailRegex)) {
+            return "Geçerli bir mail adresi giriniz.";
+        }
+
+        if (userDto.getEmail() == null) {
+            return "Mail adresi boş olamaz.";
+        }
+
+        if (userDto.getPassword() == null) {
+            return "Password boş olamaz.";
+        }
+
+        UserEntity byEmail = userRepository.findByEmail(userDto.getEmail());
+        if (byEmail != null) {
+            return "Böyle bir mail adresi var.";
+        }
+
         UserEntity userEntity = convertToEntity(userDto);
         userRepository.save(userEntity);
         return "Başarılı";
@@ -48,6 +68,6 @@ public class UserService implements IUserService {
     }
 
     private UserEntity convertToEntity(UserDto dto) {
-        return new UserEntity(dto.getId(), dto.getUsername(), dto.getEmail(), dto.getPassword(), true);
+        return new UserEntity(dto.getId(), dto.getUsername(), dto.getEmail(), dto.getPassword(), true, dto.getBirthDate(), dto.getNationalId());
     }
 }

@@ -3,6 +3,7 @@ package com.example.AppMusic.Controller;
 import com.example.AppMusic.DTO.UserDto;
 import com.example.AppMusic.IService.IUserService;
 import com.example.AppMusic.Repository.UserRepository;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

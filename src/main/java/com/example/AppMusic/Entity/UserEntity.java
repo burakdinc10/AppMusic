@@ -2,6 +2,7 @@ package com.example.AppMusic.Entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.type.descriptor.DateTimeUtils;
 
 @Entity
 @Table(name = "users")
@@ -20,4 +21,6 @@ public class UserEntity {
     private String email;
     private String password;
     private boolean isActv = true;
+    private String birthDate;
+    private String nationalId;
 }

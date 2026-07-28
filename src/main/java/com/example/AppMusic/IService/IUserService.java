@@ -12,5 +12,6 @@ public interface IUserService {
     UserDto getUserById(Long id);
 
     String createUser(@RequestBody UserDto userDto);
+
     String deleteUser(Long id);
 }
