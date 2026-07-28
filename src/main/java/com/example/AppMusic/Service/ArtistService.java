@@ -2,6 +2,7 @@ package com.example.AppMusic.Service;
 
 import com.example.AppMusic.DTO.ArtistDto;
 import com.example.AppMusic.Entity.ArtistEntity;
+import com.example.AppMusic.IService.IArtistService;
 import com.example.AppMusic.Repository.ArtistRepository;
 import com.github.dozermapper.core.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class ArtistService {
+public class ArtistService implements IArtistService {
 
     @Autowired
     private ArtistRepository artistRepository;

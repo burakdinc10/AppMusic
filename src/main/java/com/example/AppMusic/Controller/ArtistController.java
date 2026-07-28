@@ -1,7 +1,7 @@
 package com.example.AppMusic.Controller;
 
 import com.example.AppMusic.DTO.ArtistDto;
-import com.example.AppMusic.Service.ArtistService;
+import com.example.AppMusic.IService.IArtistService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,32 +12,32 @@ import java.util.List;
 public class ArtistController {
 
     @Autowired
-    private ArtistService artistService;
+    private IArtistService iArtistService;
 
     @PostMapping
     public ArtistDto createArtist(@RequestBody ArtistDto artistDto) {
-        return artistService.saveArtist(artistDto);
+        return iArtistService.saveArtist(artistDto);
     }
 
     @GetMapping
     public List<ArtistDto> getAllArtists() {
-        return artistService.getAllArtists();
+        return iArtistService.getAllArtists();
     }
 
     @GetMapping("/{id}")
     public ArtistDto getArtistById(@PathVariable Long id) {
-        return artistService.getArtistById(id);
+        return iArtistService.getArtistById(id);
     }
 
     @PutMapping("/{id}")
     public ArtistDto updateArtist(@PathVariable Long id, @RequestBody ArtistDto artistDto) {
-        return artistService.updateArtist(id, artistDto);
+        return iArtistService.updateArtist(id, artistDto);
     }
 
     @SuppressWarnings("SpellCheckingInspection")
     @DeleteMapping("/{id}")
     public String deleteArtist(@PathVariable Long id) {
-        artistService.deleteArtist(id);
+        iArtistService.deleteArtist(id);
         return "The artist is successfully deactivated (is_actv = 0).";
     }
 }

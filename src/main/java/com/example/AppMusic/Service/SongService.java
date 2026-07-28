@@ -4,6 +4,7 @@ import com.example.AppMusic.DTO.SongDto;
 import com.example.AppMusic.Entity.SongEntity;
 import com.example.AppMusic.Entity.CategoryEntity;
 import com.example.AppMusic.Entity.ArtistEntity;
+import com.example.AppMusic.IService.ISongService;
 import com.example.AppMusic.Repository.SongRepository;
 import com.example.AppMusic.Repository.CategoryRepository;
 import com.example.AppMusic.Repository.ArtistRepository;
@@ -13,7 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class SongService {
+public class SongService implements ISongService {
 
     @Autowired
     private SongRepository songRepository;

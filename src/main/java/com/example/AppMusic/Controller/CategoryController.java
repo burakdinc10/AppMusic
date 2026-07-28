@@ -1,7 +1,7 @@
 package com.example.AppMusic.Controller;
 
 import com.example.AppMusic.DTO.CategoryDto;
-import com.example.AppMusic.Service.CategoryService;
+import com.example.AppMusic.IService.ICategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,15 +12,15 @@ import java.util.List;
 public class CategoryController {
 
     @Autowired
-    private CategoryService categoryService;
+    private ICategoryService iCategoryService;
 
     @PostMapping
     public CategoryDto createCategory(@RequestBody CategoryDto categoryDto) {
-        return categoryService.saveCategory(categoryDto);
+        return iCategoryService.saveCategory(categoryDto);
     }
 
     @GetMapping
     public List<CategoryDto> getAllCategories() {
-        return categoryService.getAllCategories();
+        return iCategoryService.getAllCategories();
     }
 }

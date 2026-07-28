@@ -2,6 +2,7 @@ package com.example.AppMusic.Service;
 
 import com.example.AppMusic.DTO.CategoryDto;
 import com.example.AppMusic.Entity.CategoryEntity;
+import com.example.AppMusic.IService.ICategoryService;
 import com.example.AppMusic.Repository.CategoryRepository;
 import com.github.dozermapper.core.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,7 @@ import java.util.Date;
 import java.util.List;
 
 @Service
-public class CategoryService {
+public class CategoryService implements ICategoryService {
 
     @Autowired
     private CategoryRepository categoryRepository;
