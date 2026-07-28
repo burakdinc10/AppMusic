@@ -1,4 +1,4 @@
-package com.example.musicapp.Controller;
+package com.example.AppMusic.Controller;
 
 import com.example.AppMusic.DTO.ArtistDto;
 import com.example.AppMusic.Service.ArtistService;
