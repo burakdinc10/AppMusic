@@ -1,7 +1,8 @@
 package com.example.AppMusic.Controller;
 
+import com.example.AppMusic.DTO.CreateUserRequestDto;
 import com.example.AppMusic.DTO.LoginUserRequestDto;
-import com.example.AppMusic.DTO.UserDto;
+import com.example.AppMusic.DTO.UserResponseDto;
 import com.example.AppMusic.IService.IUserService;
 import com.example.AppMusic.Repository.UserRepository;
 import jakarta.validation.Valid;
@@ -21,18 +22,18 @@ public class UserController {
 
 
     @GetMapping
-    public List<UserDto> getAllUsers() {
+    public List<UserResponseDto> getAllUsers() {
         return iUserService.getAllUsers();
     }
 
     @GetMapping("/{id}")
-    public UserDto getUserId(@PathVariable Long id) {
+    public UserResponseDto getUserId(@PathVariable Long id) {
         return iUserService.getUserById(id);
     }
 
     @PostMapping("/create")
-    public String createUser(@RequestBody UserDto userDto) {
-        return iUserService.createUser(userDto);
+    public String createUser(@RequestBody CreateUserRequestDto requestDto) {
+        return iUserService.createUser(requestDto);
     }
 
     @PostMapping("/login")

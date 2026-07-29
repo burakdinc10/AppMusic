@@ -1,7 +1,9 @@
 package com.example.AppMusic.Service;
 
+import com.example.AppMusic.DTO.CreateUserRequestDto;
 import com.example.AppMusic.DTO.LoginUserRequestDto;
 import com.example.AppMusic.DTO.UserDto;
+import com.example.AppMusic.DTO.UserResponseDto;
 import com.example.AppMusic.Entity.UserEntity;
 import com.example.AppMusic.IService.IUserService;
 import com.example.AppMusic.Repository.UserRepository;
@@ -26,41 +28,43 @@ public class UserService implements IUserService {
     private Mapper dozerMapper;
 
 
-    public List<UserDto> getAllUsers() {
+    public List<UserResponseDto> getAllUsers() {
         return userRepository.findByIsActvTrue().stream()
-                .map(user -> dozerMapper.map(user, UserDto.class))
+                .map(user -> dozerMapper.map(user, UserResponseDto.class))
                 .toList();
     }
 
-    public UserDto getUserById(Long id) {
-        UserEntity entity =  userRepository.findById(id)
+    @Override
+    public UserResponseDto getUserById(Long id) {
+        UserEntity userEntity =  userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("The user is not found! ID: " + id));
-        return null;
+
+        return dozerMapper.map(userEntity, UserResponseDto.class);
     }
 
 
-    public String createUser(UserDto userDto){
+    public String createUser(CreateUserRequestDto requestDto){
 
         String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
 
-        if (!userDto.getEmail().matches(emailRegex)) {
+        if (!requestDto.getEmail().matches(emailRegex)) {
             return "Geçerli bir mail adresi giriniz.";
         }
 
-        if (userDto.getEmail() == null) {
+        if (requestDto.getEmail() == null) {
             return "Mail adresi boş olamaz.";
         }
 
-        if (userDto.getPassword() == null) {
+        if (requestDto.getPassword() == null) {
             return "Password boş olamaz.";
         }
 
-        UserEntity byEmail = userRepository.findByEmail(userDto.getEmail());
+        UserEntity byEmail = userRepository.findByEmail(requestDto.getEmail());
         if (byEmail != null) {
             return "Böyle bir mail adresi var.";
         }
 
-        UserEntity userEntity = convertToEntity(userDto);
+        UserEntity userEntity = dozerMapper.map(requestDto, UserEntity.class);
         userRepository.save(userEntity);
         return "Başarılı";
     }

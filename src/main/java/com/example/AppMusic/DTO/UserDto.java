@@ -16,9 +16,6 @@ public class UserDto {
     private String password;
     private String username;
     private String userLastName;
-
-
     private String birthDate;
-
     private String nationalId;
 }
