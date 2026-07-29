@@ -1,5 +1,6 @@
 package com.example.AppMusic.Controller;
 
+import com.example.AppMusic.DTO.LoginUserRequestDto;
 import com.example.AppMusic.DTO.UserDto;
 import com.example.AppMusic.IService.IUserService;
 import com.example.AppMusic.Repository.UserRepository;
@@ -32,6 +33,11 @@ public class UserController {
     @PostMapping("/create")
     public String createUser(@RequestBody UserDto userDto) {
         return iUserService.createUser(userDto);
+    }
+
+    @PostMapping("/login")
+    public String login(@RequestBody LoginUserRequestDto loginUserRequestDto) {
+        return iUserService.login(loginUserRequestDto);
     }
 
     @DeleteMapping("/{id}")

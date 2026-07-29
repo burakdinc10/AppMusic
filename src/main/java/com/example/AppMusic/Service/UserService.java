@@ -1,5 +1,6 @@
 package com.example.AppMusic.Service;
 
+import com.example.AppMusic.DTO.LoginUserRequestDto;
 import com.example.AppMusic.DTO.UserDto;
 import com.example.AppMusic.Entity.UserEntity;
 import com.example.AppMusic.IService.IUserService;
@@ -11,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.regex.Pattern;
 
 @Service
 @RequiredArgsConstructor
@@ -60,6 +63,36 @@ public class UserService implements IUserService {
         UserEntity userEntity = convertToEntity(userDto);
         userRepository.save(userEntity);
         return "Başarılı";
+    }
+
+    @Override
+    public String login(LoginUserRequestDto loginRequestDto) {
+
+        String emailRegex = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$";
+
+        if (loginRequestDto == null ||
+                loginRequestDto.getEmail() == null ||
+                !Pattern.matches(emailRegex, loginRequestDto.getEmail())) {
+
+            return "Kardeş giremedin düzgün mail adresi gir";
+        }
+
+
+        Optional<UserEntity> userOptional = Optional.ofNullable(userRepository.findByEmail(loginRequestDto.getEmail()));
+
+        if (userOptional.isEmpty()) {
+            return "Girdiğiniz bilgiler yanlış.";
+        }
+
+        UserEntity user = userOptional.get();
+
+
+        if (!user.getPassword().equals(loginRequestDto.getPassword())) {
+            return "Girdiğiniz bilgiler yanlış.";
+        }
+
+
+        return "Başarıyla giriş yapabildin.";
     }
 
     @Override
