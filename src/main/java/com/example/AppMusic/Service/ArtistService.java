@@ -5,56 +5,55 @@ import com.example.AppMusic.Entity.ArtistEntity;
 import com.example.AppMusic.IService.IArtistService;
 import com.example.AppMusic.Repository.ArtistRepository;
 import com.github.dozermapper.core.Mapper;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class ArtistService implements IArtistService {
 
-    @Autowired
-    private ArtistRepository artistRepository;
+    private final ArtistRepository artistRepository;
+    private final Mapper dozerMapper;
 
-    @Autowired
-    private Mapper dozerMapper;
-
+    @Override
     public ArtistDto saveArtist(ArtistDto artistDto) {
-        ArtistEntity entity = dozerMapper.map(artistDto, ArtistEntity.class);
-        ArtistEntity savedEntity = artistRepository.save(entity);
-        return dozerMapper.map(savedEntity, ArtistDto.class);
+        return null;
     }
 
+    @Override
+    public String createArtist(ArtistDto artistDto) {
+
+        if (artistDto == null || artistDto.getArtistName() == null || artistDto.getArtistName().trim().isEmpty()) {
+            return "Hata: Sanatçı ismi olmadan kayıt yapılamaz!";
+        }
+
+        ArtistEntity artistEntity = dozerMapper.map(artistDto, ArtistEntity.class);
+        artistRepository.save(artistEntity);
+
+        return "Sanatçı başarıyla eklendi.";
+    }
+
+    @Override
     public List<ArtistDto> getAllArtists() {
-        return artistRepository.findByIsActvTrue().stream()
+        return artistRepository.findAll().stream()
                 .map(artist -> dozerMapper.map(artist, ArtistDto.class))
                 .toList();
     }
 
+    @Override
     public ArtistDto getArtistById(Long id) {
-        ArtistEntity entity = artistRepository.findById(id)
-                .filter(ArtistEntity::getIsActv)
-                .orElseThrow(() -> new RuntimeException("Singer not found !"));
-        return dozerMapper.map(entity, ArtistDto.class);
+        return null;
     }
 
+    @Override
     public ArtistDto updateArtist(Long id, ArtistDto artistDto) {
-        ArtistEntity existingEntity = artistRepository.findById(id)
-                .filter(ArtistEntity::getIsActv)
-                .orElseThrow(() -> new RuntimeException("No singer was found to update!"));
-
-        existingEntity.setArtistName(artistDto.getArtistName());
-        existingEntity.setHometown(artistDto.getHometown());
-        existingEntity.setPrice(artistDto.getPrice());
-
-        ArtistEntity updatedEntity = artistRepository.save(existingEntity);
-        return dozerMapper.map(updatedEntity, ArtistDto.class);
+        return null;
     }
 
+    @Override
     public void deleteArtist(Long id) {
-        ArtistEntity entity = artistRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("No artist was found to be removed!"));
-        entity.setIsActv(false);
-        artistRepository.save(entity);
+
     }
 }

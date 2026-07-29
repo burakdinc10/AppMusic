@@ -8,5 +8,9 @@ public interface ICategoryService {
 
   CategoryDto saveCategory(CategoryDto categoryDto);
 
+  String createCategory(CategoryDto categoryDto);
+
   List<CategoryDto> getAllCategories();
+
+  List<CategoryDto> getAllCategory();
 }

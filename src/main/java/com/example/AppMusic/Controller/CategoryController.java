@@ -8,19 +8,19 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/categories")
+@RequestMapping("/api/category")
 public class CategoryController {
 
     @Autowired
     private ICategoryService iCategoryService;
 
-    @PostMapping
+    @PostMapping("/create")
     public CategoryDto createCategory(@RequestBody CategoryDto categoryDto) {
         return iCategoryService.saveCategory(categoryDto);
     }
 
     @GetMapping
-    public List<CategoryDto> getAllCategories() {
-        return iCategoryService.getAllCategories();
+    public List<CategoryDto> getAllCategory() {
+        return iCategoryService.getAllCategory();
     }
 }

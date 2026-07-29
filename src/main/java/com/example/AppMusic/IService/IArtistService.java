@@ -8,6 +8,8 @@ public interface IArtistService {
 
   ArtistDto saveArtist(ArtistDto artistDto);
 
+  String createArtist(ArtistDto artistDto);
+
   List<ArtistDto> getAllArtists();
 
   ArtistDto getArtistById(Long id);

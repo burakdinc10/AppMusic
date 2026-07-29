@@ -15,7 +15,7 @@ public class SongController {
     @Autowired
     private ISongService iSongService;
 
-    @PostMapping
+    @PostMapping("/create")
     public SongDto createSong(@Valid @RequestBody SongDto songDto, @RequestParam Long categoryId) {
         return iSongService.saveSong(songDto, categoryId);
     }

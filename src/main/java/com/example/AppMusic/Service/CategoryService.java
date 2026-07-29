@@ -33,11 +33,33 @@ public class CategoryService implements ICategoryService {
         return dozerMapper.map(savedCategory, CategoryDto.class);
     }
 
+    @Override
+    public String createCategory(CategoryDto categoryDto) {
+
+        if (categoryDto.getCategoryName() == null || categoryDto.getCategoryName().trim().isEmpty()) {
+            return "Kategori adı boş olamaz!";
+        }
+
+        if (categoryRepository.findByCategoryName(categoryDto.getCategoryName().trim()).isPresent()) {
+            return "Böyle bir kategori zaten mevcuttur .";
+        }
+
+        CategoryEntity categoryEntity = dozerMapper.map(categoryDto, CategoryEntity.class);
+        categoryRepository.save(categoryEntity);
+
+        return "Kategori başarıyla oluşturuldu.";
+    }
+
+    @Override
     public List<CategoryDto> getAllCategories() {
-        List<CategoryEntity> categories = categoryRepository.findByIsActvTrue();
+        return List.of();
+    }
+
+    public List<CategoryDto> getAllCategory() {
+        List<CategoryEntity> category = categoryRepository.findByIsActvTrue();
         List<CategoryDto> dtos = new ArrayList<>();
 
-        for (CategoryEntity category : categories) {
+        for (CategoryEntity categories : category) {
             dtos.add(dozerMapper.map(category, CategoryDto.class));
         }
         return dtos;

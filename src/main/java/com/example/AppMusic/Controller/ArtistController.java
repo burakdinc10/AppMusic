@@ -14,7 +14,7 @@ public class ArtistController {
     @Autowired
     private IArtistService iArtistService;
 
-    @PostMapping
+    @PostMapping("/create")
     public ArtistDto createArtist(@RequestBody ArtistDto artistDto) {
         return iArtistService.saveArtist(artistDto);
     }
