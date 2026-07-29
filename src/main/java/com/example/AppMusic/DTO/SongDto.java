@@ -1,5 +1,6 @@
 package com.example.AppMusic.DTO;
 
+import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
@@ -17,4 +18,8 @@ public class SongDto {
     private String songTime;
     private Long categoryId;
     private Long artistId;
+
+    public String getsongName() {
+        return null;
+    }
 }

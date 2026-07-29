@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface ISongService {
 
-  SongDto saveSong(SongDto songDto, Long categoryId);
+  String createSong(SongDto songDto);
 
   SongDto getSongById(Long id);
 

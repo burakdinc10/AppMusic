@@ -9,15 +9,15 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/songs")
+@RequestMapping("/api/song")
 public class SongController {
 
     @Autowired
     private ISongService iSongService;
 
     @PostMapping("/create")
-    public SongDto createSong(@Valid @RequestBody SongDto songDto, @RequestParam Long categoryId) {
-        return iSongService.saveSong(songDto, categoryId);
+    public String createSong(@Valid @RequestBody SongDto songDto, @RequestParam Long categoryId) {
+        return iSongService.createSong(songDto);
     }
 
     @GetMapping

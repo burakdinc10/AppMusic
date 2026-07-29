@@ -12,6 +12,7 @@ import com.github.dozermapper.core.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class SongService implements ISongService {
@@ -28,32 +29,30 @@ public class SongService implements ISongService {
     @Autowired
     private Mapper dozerMapper;
 
-    public SongDto saveSong(SongDto songDto, Long categoryId) {
+    @Override
+    public String createSong(SongDto songDto) {
+
+        if (songDto == null || songDto.getsongName() == null || songDto.getsongName().trim().isEmpty()) {
+            return "Hata: Şarkı ismi boş olamaz!";
+        }
+
+        Optional<SongEntity> existingSong = songRepository.findBySongName(songDto.getsongName().trim());
+        if (existingSong.isPresent()) {
+            return "Böyle bir şarkı zaten veritabanında mevcut!";
+        }
+
+        if (songDto.getArtistId() != null && !artistRepository.existsById(songDto.getArtistId())) {
+            return "Hata: Geçersiz Sanatçı (Artist) ID!";
+        }
+
+        if (songDto.getCategoryId() != null && !categoryRepository.existsById(songDto.getCategoryId())) {
+            return "Hata: Geçersiz Kategori (Category) ID!";
+        }
+
         SongEntity songEntity = dozerMapper.map(songDto, SongEntity.class);
-        songEntity.setIsActv(true);
+        songRepository.save(songEntity);
 
-        if (categoryId != null) {
-            CategoryEntity category = categoryRepository.findById(categoryId)
-                    .orElseThrow(() -> new RuntimeException("The category is not found"));
-            songEntity.setCategory(category);
-        }
-
-        if (songDto.getArtistId() != null) {
-            ArtistEntity artist = artistRepository.findById(songDto.getArtistId())
-                    .orElseThrow(() -> new RuntimeException("The artist is not found"));
-            songEntity.setArtist(artist);
-        }
-
-        SongEntity savedSong = songRepository.save(songEntity);
-
-        SongDto responseDto = dozerMapper.map(savedSong, SongDto.class);
-        if (savedSong.getCategory() != null) {
-            responseDto.setCategoryId(savedSong.getCategory().getId());
-        }
-        if (savedSong.getArtist() != null) {
-            responseDto.setArtistId(savedSong.getArtist().getId());
-        }
-        return responseDto;
+        return "Şarkı başarıyla eklendi.";
     }
 
     public SongDto getSongById(Long id) {
