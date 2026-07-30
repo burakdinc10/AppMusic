@@ -19,7 +19,7 @@ public class CategoryController {
         return iCategoryService.saveCategory(categoryDto);
     }
 
-    @GetMapping
+    @GetMapping("/all")
     public List<CategoryDto> getAllCategory() {
         return iCategoryService.getAllCategory();
     }
