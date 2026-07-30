@@ -25,4 +25,7 @@ public class UserEntity {
     private String nationalId;
 
 
+
+    
+
 }
