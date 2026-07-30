@@ -24,8 +24,4 @@ public class UserEntity {
     private String birthDate;
     private String nationalId;
 
-
-
-    
-
 }

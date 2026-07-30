@@ -60,7 +60,7 @@ public class CategoryService implements ICategoryService {
         List<CategoryDto> dtos = new ArrayList<>();
 
         for (CategoryEntity categories : category) {
-            dtos.add(dozerMapper.map(category, CategoryDto.class));
+            dtos.add(dozerMapper.map(categories, CategoryDto.class));
         }
         return dtos;
     }
