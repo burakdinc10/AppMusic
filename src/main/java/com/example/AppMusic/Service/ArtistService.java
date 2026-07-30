@@ -5,6 +5,7 @@ import com.example.AppMusic.Entity.ArtistEntity;
 import com.example.AppMusic.IService.IArtistService;
 import com.example.AppMusic.Repository.ArtistRepository;
 import com.github.dozermapper.core.Mapper;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +24,7 @@ public class ArtistService implements IArtistService {
     }
 
     @Override
+    @Transactional
     public String createArtist(ArtistDto artistDto) {
 
         if (artistDto == null || artistDto.getArtistName() == null || artistDto.getArtistName().trim().isEmpty()) {
