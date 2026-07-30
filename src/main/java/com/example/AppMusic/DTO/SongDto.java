@@ -18,8 +18,4 @@ public class SongDto {
     private String songTime;
     private Long categoryId;
     private Long artistId;
-
-    public String getsongName() {
-        return null;
-    }
 }

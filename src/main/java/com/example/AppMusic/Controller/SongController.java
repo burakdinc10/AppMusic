@@ -16,7 +16,7 @@ public class SongController {
     private ISongService iSongService;
 
     @PostMapping("/create")
-    public String createSong(@Valid @RequestBody SongDto songDto, @RequestParam Long categoryId) {
+    public String createSong(@Valid @RequestBody SongDto songDto) {
         return iSongService.createSong(songDto);
     }
 

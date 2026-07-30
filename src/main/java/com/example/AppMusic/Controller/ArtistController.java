@@ -15,8 +15,8 @@ public class ArtistController {
     private IArtistService iArtistService;
 
     @PostMapping("/create")
-    public ArtistDto createArtist(@RequestBody ArtistDto artistDto) {
-        return iArtistService.saveArtist(artistDto);
+    public String createArtist(@RequestBody ArtistDto artistDto) {
+        return iArtistService.createArtist(artistDto);
     }
 
     @GetMapping

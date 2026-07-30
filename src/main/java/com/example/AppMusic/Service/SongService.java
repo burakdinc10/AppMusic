@@ -32,24 +32,30 @@ public class SongService implements ISongService {
     @Override
     public String createSong(SongDto songDto) {
 
-        if (songDto == null || songDto.getsongName() == null || songDto.getsongName().trim().isEmpty()) {
+        if (songDto == null || songDto.getSongName() == null || songDto.getSongName().trim().isEmpty()) {
             return "Hata: Şarkı ismi boş olamaz!";
         }
 
-        Optional<SongEntity> existingSong = songRepository.findBySongName(songDto.getsongName().trim());
+        SongEntity songEntity = dozerMapper.map(songDto, SongEntity.class);
+
+        Optional<SongEntity> existingSong = songRepository.findBySongName(songDto.getSongName().trim());
         if (existingSong.isPresent()) {
             return "Böyle bir şarkı zaten veritabanında mevcut!";
         }
 
-        if (songDto.getArtistId() != null && !artistRepository.existsById(songDto.getArtistId())) {
-            return "Hata: Geçersiz Sanatçı (Artist) ID!";
+        if (songDto.getArtistId() != null) {
+            ArtistEntity artist = artistRepository.findById(songDto.getArtistId())
+                    .orElseThrow(() -> new RuntimeException("Artist bulunamadı!"));
+            songEntity.setArtist(artist);
         }
 
-        if (songDto.getCategoryId() != null && !categoryRepository.existsById(songDto.getCategoryId())) {
-            return "Hata: Geçersiz Kategori (Category) ID!";
+        if (songDto.getCategoryId() != null) {
+            CategoryEntity category = categoryRepository.findById(songDto.getCategoryId())
+                    .orElseThrow(() -> new RuntimeException("Kategori bulunamadı!"));
+            songEntity.setCategory(category);
         }
 
-        SongEntity songEntity = dozerMapper.map(songDto, SongEntity.class);
+
         songRepository.save(songEntity);
 
         return "Şarkı başarıyla eklendi.";
