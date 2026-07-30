@@ -15,7 +15,6 @@ public class UserDto {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
     private String username;
-    private String userLastName;
     private String birthDate;
     private String nationalId;
 }

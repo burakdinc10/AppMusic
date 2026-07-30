@@ -1,13 +1,11 @@
 package com.example.AppMusic.Service;
 
-import com.example.AppMusic.DTO.CreateUserRequestDto;
-import com.example.AppMusic.DTO.LoginUserRequestDto;
-import com.example.AppMusic.DTO.UserDto;
-import com.example.AppMusic.DTO.UserResponseDto;
+import com.example.AppMusic.DTO.*;
 import com.example.AppMusic.Entity.UserEntity;
 import com.example.AppMusic.IService.IUserService;
 import com.example.AppMusic.Repository.UserRepository;
 import com.github.dozermapper.core.Mapper;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +17,7 @@ import java.util.regex.Pattern;
 
 @Service
 @RequiredArgsConstructor
+@AllArgsConstructor
 public class UserService implements IUserService {
 
     @Autowired
@@ -101,6 +100,11 @@ public class UserService implements IUserService {
 
     @Override
     public String deleteUser(Long id) {
+        return "";
+    }
+
+    @Override
+    public String updateUser(UpdateUserRequestDto requestDto) {
         return "";
     }
 

@@ -23,4 +23,6 @@ public class UserEntity {
     private boolean isActv = true;
     private String birthDate;
     private String nationalId;
+
+
 }

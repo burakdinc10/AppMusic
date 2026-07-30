@@ -1,10 +1,13 @@
 package com.example.AppMusic.DTO;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
-public class UserResponseDto {
-    private Long Id;
+@Getter
+@Setter
+public class UpdateUserRequestDto {
+
+    private Long id;
     private String email;
     private String username;
     private String birthDate;
