@@ -15,7 +15,7 @@ public class ArtistEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "artist_name", nullable = false)
+    @Column(name = "artist_name")
     private String artistName;
 
     @Column(name = "hometown")
@@ -24,7 +24,7 @@ public class ArtistEntity {
     @Column(name = "price")
     private Double price;
 
-    @Column(name = "is_actv", nullable = false)
+    @Column(name = "is_actv")
     private Boolean isActv = true;
 
     @Temporal(TemporalType.TIMESTAMP)

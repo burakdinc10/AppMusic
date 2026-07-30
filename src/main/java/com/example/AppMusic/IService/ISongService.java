@@ -17,4 +17,6 @@ public interface ISongService {
   List<SongDto> getSongsByCategoryId(Long categoryId);
 
   void deleteSong(Long id);
+
+  String updateSong(Long id, SongDto songDto);
 }

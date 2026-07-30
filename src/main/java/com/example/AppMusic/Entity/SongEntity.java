@@ -33,12 +33,12 @@ public class SongEntity {
     private Date udate;
 
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "category_id")
     private CategoryEntity category;
 
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "artist_id")
     private ArtistEntity artist;
 

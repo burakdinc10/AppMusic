@@ -16,7 +16,7 @@ public class SongController {
     private ISongService iSongService;
 
     @PostMapping("/create")
-    public String createSong(@Valid @RequestBody SongDto songDto, @RequestParam Long categoryId) {
+    public String createSong(@Valid @RequestBody SongDto songDto) {
         return iSongService.createSong(songDto);
     }
 
@@ -44,5 +44,10 @@ public class SongController {
     public String deleteSong(@PathVariable Long id) {
         iSongService.deleteSong(id);
         return "The song is successfully deactivated. (is_actv = 0).";
+    }
+
+    @PutMapping("/update/{id}")
+    public String updateSong(@PathVariable Long id, @Valid @RequestBody SongDto songDto) {
+        return iSongService.updateSong(id, songDto);
     }
 }
