@@ -51,6 +51,9 @@ public class SongService implements ISongService {
         if (songDto.getArtistId() != null) {
             ArtistEntity artist = artistRepository.findById(songDto.getArtistId())
                     .orElseThrow(() -> new RuntimeException("Geçersiz Sanatçı ID!"));
+        if (songDto.getArtistId() != null) {
+            ArtistEntity artist = artistRepository.findById(songDto.getArtistId())
+                    .orElseThrow(() -> new RuntimeException("Artist bulunamadı!"));
             songEntity.setArtist(artist);
         }
 
@@ -59,6 +62,11 @@ public class SongService implements ISongService {
                     .orElseThrow(() -> new RuntimeException("Geçersiz Kategori ID!"));
             songEntity.setCategory(category);
         }
+                    .orElseThrow(() -> new RuntimeException("Kategori bulunamadı!"));
+            songEntity.setCategory(category);
+        }
+
+
         songRepository.save(songEntity);
 
         return "Şarkı başarıyla eklendi.";
