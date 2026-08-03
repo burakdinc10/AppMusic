@@ -18,7 +18,6 @@ public class PlaylistDto {
 
     @JsonProperty("userId")
     private Long userId;
-
     private Set<SongDto> songs;
-
+    private Integer songCount;
 }

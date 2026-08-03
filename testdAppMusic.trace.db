@@ -39,3 +39,9 @@ SELECT * FROM ARTISTS_ENTITY [42102-214]
 org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-214]
 2026-07-30 15:36:51 jdbc[3]: exception
 org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-214]
+2026-07-31 17:33:23 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-214]
+2026-07-31 17:50:15 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-214]
+2026-07-31 17:54:58 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-214]

@@ -30,4 +30,6 @@ public class PlaylistController {
     public List<PlaylistDto> getUserPlaylists(@PathVariable Long userId) {
         return playlistService.getUserPlaylists(userId);
     }
+
+
 }

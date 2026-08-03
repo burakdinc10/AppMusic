@@ -36,4 +36,7 @@ public class PlaylistEntity {
             inverseJoinColumns = @JoinColumn(name = "song_id")
     )
     private Set<SongEntity> songs = new HashSet<>();
+
+    @Column(name = "song_count")
+    private Integer songCount = 0;
 }

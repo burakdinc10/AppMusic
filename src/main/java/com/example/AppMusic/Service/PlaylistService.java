@@ -68,6 +68,8 @@ public class PlaylistService implements IPlaylistService {
 
         PlaylistEntity updatedPlaylist = playlistRepository.save(playlist);
 
+        playlist.setSongCount(playlist.getSongs().size());
+
         PlaylistDto dto = dozerMapper.map(updatedPlaylist, PlaylistDto.class);
         dto.setUserId(updatedPlaylist.getUser().getId());
 
@@ -92,4 +94,18 @@ public class PlaylistService implements IPlaylistService {
             return dto;
         }).toList();
     }
+
+    public PlaylistDto convertToDto(PlaylistEntity playlistEntity) {
+        PlaylistDto dto = dozerMapper.map(playlistEntity, PlaylistDto.class);
+
+        if (playlistEntity.getSongs() != null) {
+            dto.setSongCount(playlistEntity.getSongs().size());
+        } else {
+            dto.setSongCount(0);
+        }
+
+        return dto;
+    }
+
+
 }
