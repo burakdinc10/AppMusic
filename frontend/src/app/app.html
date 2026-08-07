@@ -1,0 +1,231 @@
+<main class="layout">
+  <section class="auth-shell" *ngIf="!authenticated()">
+    <article class="auth-copy">
+      <p class="eyebrow">AppMusic Giris</p>
+      <h1>Kayit ol, giris yap ve muzik paneline gec</h1>
+      <p class="summary">
+        Bu akis backend'indeki user endpoint'lerini kullanir. Giris basarili olunca kullanici
+        otomatik olarak sarki ekleme ve listeleme ekranina yonlendirilir.
+      </p>
+    </article>
+
+    <article class="panel auth-panel">
+      <div class="auth-switch">
+        <button type="button" [class.active]="authMode() === 'login'" (click)="setAuthMode('login')">
+          Login
+        </button>
+        <button type="button" [class.active]="authMode() === 'register'" (click)="setAuthMode('register')">
+          Register
+        </button>
+      </div>
+
+      <form class="song-form" *ngIf="authMode() === 'login'" (ngSubmit)="submitLogin()">
+        <label>
+          <span>Email</span>
+          <input
+            type="email"
+            name="loginEmail"
+            [(ngModel)]="loginModel.email"
+            placeholder="ornek@mail.com"
+            required
+          />
+        </label>
+
+        <label>
+          <span>Sifre</span>
+          <input
+            type="password"
+            name="loginPassword"
+            [(ngModel)]="loginModel.password"
+            placeholder="Sifreni gir"
+            required
+          />
+        </label>
+
+        <button class="primary-button" type="submit" [disabled]="authLoading()">
+          {{ authLoading() ? 'Giris yapiliyor...' : 'Giris Yap' }}
+        </button>
+      </form>
+
+      <form class="song-form" *ngIf="authMode() === 'register'" (ngSubmit)="submitRegister()">
+        <label>
+          <span>Kullanici adi</span>
+          <input
+            type="text"
+            name="registerUsername"
+            [(ngModel)]="registerModel.username"
+            placeholder="berkay"
+            required
+          />
+        </label>
+
+        <label>
+          <span>Email</span>
+          <input
+            type="email"
+            name="registerEmail"
+            [(ngModel)]="registerModel.email"
+            placeholder="ornek@mail.com"
+            required
+          />
+        </label>
+
+        <label>
+          <span>Sifre</span>
+          <input
+            type="password"
+            name="registerPassword"
+            [(ngModel)]="registerModel.password"
+            placeholder="Guclu bir sifre"
+            required
+          />
+        </label>
+
+        <label>
+          <span>Dogum tarihi</span>
+          <input
+            type="text"
+            name="registerBirthDate"
+            [(ngModel)]="registerModel.birthDate"
+            placeholder="2000-10-21"
+          />
+        </label>
+
+        <label>
+          <span>TC / National ID</span>
+          <input
+            type="text"
+            name="registerNationalId"
+            [(ngModel)]="registerModel.nationalId"
+            placeholder="11111111111"
+          />
+        </label>
+
+        <button class="primary-button" type="submit" [disabled]="authLoading()">
+          {{ authLoading() ? 'Kayit olusturuluyor...' : 'Kayit Ol' }}
+        </button>
+      </form>
+
+      <p class="message success" *ngIf="authSuccessMessage()">{{ authSuccessMessage() }}</p>
+      <p class="message error" *ngIf="authErrorMessage()">{{ authErrorMessage() }}</p>
+    </article>
+  </section>
+
+  <ng-container *ngIf="authenticated()">
+    <section class="hero">
+      <div>
+        <p class="eyebrow">Hos geldin</p>
+        <h1>Spring Boot API'lerini kullanan ayri bir muzik paneli</h1>
+        <p class="summary">
+          Aktif kullanici: <strong>{{ currentUserEmail() }}</strong>. Bu ekran mevcut backend'indeki sarkilari listeler,
+          artist ve kategori verilerini ceker ve yeni sarki ekleme istegini dogrudan API'ye yollar.
+        </p>
+      </div>
+
+      <div class="hero-actions">
+        <button class="ghost-button" type="button" (click)="loadDashboard()">
+          Verileri Yenile
+        </button>
+        <button class="ghost-button" type="button" (click)="logout()">
+          Cikis Yap
+        </button>
+      </div>
+    </section>
+
+    <section class="grid">
+      <article class="panel form-panel">
+        <div class="panel-header">
+          <div>
+            <p class="eyebrow">Yeni sarki</p>
+            <h2>API'ye sarki ekle</h2>
+          </div>
+        </div>
+
+        <form class="song-form" (ngSubmit)="submitSong()">
+          <label>
+            <span>Sarki adi</span>
+            <input
+              type="text"
+              name="songName"
+              [(ngModel)]="model.songName"
+              placeholder="Ornek: Gece Yolu"
+              required
+            />
+          </label>
+
+          <label>
+            <span>Sure</span>
+            <input
+              type="text"
+              name="songTime"
+              [(ngModel)]="model.songTime"
+              placeholder="03:42"
+            />
+          </label>
+
+          <label>
+            <span>Artist</span>
+            <select
+              name="artistId"
+              [(ngModel)]="model.artistId"
+            >
+              <option [ngValue]="null">Artist sec</option>
+              <option *ngFor="let artist of artists()" [ngValue]="artist.id">
+                {{ artist.artistName }}
+              </option>
+            </select>
+          </label>
+
+          <label>
+            <span>Kategori</span>
+            <select
+              name="categoryId"
+              [(ngModel)]="model.categoryId"
+            >
+              <option [ngValue]="null">Kategori sec</option>
+              <option *ngFor="let category of categories()" [ngValue]="category.id">
+                {{ category.categoryName }}
+              </option>
+            </select>
+          </label>
+
+          <button class="primary-button" type="submit" [disabled]="saving()">
+            {{ saving() ? 'Kaydediliyor...' : 'Sarkiyi Kaydet' }}
+          </button>
+        </form>
+
+        <p class="message success" *ngIf="successMessage()">{{ successMessage() }}</p>
+        <p class="message error" *ngIf="errorMessage()">{{ errorMessage() }}</p>
+      </article>
+
+      <article class="panel">
+        <div class="panel-header">
+          <div>
+            <p class="eyebrow">Sarki listesi</p>
+            <h2>{{ songCountLabel() }}</h2>
+          </div>
+        </div>
+
+        <div class="loading" *ngIf="loading()">Veriler yukleniyor...</div>
+
+        <div class="song-list" *ngIf="!loading()">
+          <div class="song-card" *ngFor="let song of songs()">
+            <div>
+              <h3>{{ song.songName }}</h3>
+              <p>{{ artistName(song.artistId) }}</p>
+            </div>
+
+            <div class="song-meta">
+              <span>{{ categoryName(song.categoryId) }}</span>
+              <strong>{{ song.songTime || '--:--' }}</strong>
+            </div>
+          </div>
+
+          <p class="empty" *ngIf="songs().length === 0">
+            Henuz sarki yok. Soldaki formdan ilk sarkiyi ekleyebilirsin.
+          </p>
+        </div>
+      </article>
+    </section>
+  </ng-container>
+</main>
